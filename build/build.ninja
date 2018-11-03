@@ -14,4 +14,7 @@ rule link
     description = link $out
 
 build password.o: cc ../src/password.c
+build keyak.o: cc ../src/keyak.c
+
 build password: link ../src/password_command.c password.o
+build encrypt: link ../src/encrypt_command.c keyak.o

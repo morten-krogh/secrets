@@ -35,6 +35,8 @@
 
 # Executables
 password
+encrypt
+decrypt
 *.exe
 *.out
 *.app

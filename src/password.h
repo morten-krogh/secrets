@@ -14,7 +14,7 @@
 // entropy of the password is at least the entropy of the prefix plus 103. The
 // entropy can be higher since the boundary between the prefix and the
 // following characters is unknown from the password alone.
-// 
+//
 // The password is not constructed to obtain maximum entropy, given the length,
 // but rather to satisfy standard password strength checkers. The password has
 // the structure 'prefix' + 6 times ('punctuation character' + 'lower case

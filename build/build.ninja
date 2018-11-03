@@ -3,11 +3,15 @@
 cc = gcc
 cflags = -Wall -Werror -Wpedantic
 
-rule compile
-    command = $cc $cflags -c $in -o $out
+rule cc
+    command = $cc $cflags -c $in -o $out -MMD -MF $out.d
+    depfile = $out.d
+    deps = $cc
+    description = cc $out
 
 rule link
     command = $cc $in -o $out
+    description = link $out
 
-build password.o: compile ../src/password.c
+build password.o: cc ../src/password.c
 build password: link ../src/password_command.c password.o

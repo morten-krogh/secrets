@@ -14,9 +14,6 @@ void usage(const char* cmd)
 	printf(fmt, cmd);
 }
 
-
-
-
 int main(int argc, char** argv)
 {
 	static struct option longopts[] = {

@@ -1,0 +1,13 @@
+# build.ninja
+
+cc = gcc
+cflags = -Wall -Werror -Wpedantic
+
+rule compile
+    command = $cc $cflags -c $in -o $out
+
+rule link
+    command = $cc $in -o $out
+
+build password.o: compile ../src/password.c
+build password: link ../src/password_command.c password.o

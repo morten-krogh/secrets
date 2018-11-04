@@ -14,11 +14,16 @@ rule link
     command = $cc $in -o $out
     description = link $out
 
-build file.o: cc ../src/file.c
-build password.o: cc ../src/password.c
-build crypto.o: cc ../src/crypto.c
+build objects/file.o: cc ../src/file.c
+build objects/password.o: cc ../src/password.c
+build objects/crypto.o: cc ../src/crypto.c
 
-build password: link ../src/password_command.c password.o
-build encrypt: link ../src/encrypt_command.c file.o crypto.o $libkeccak
-build decrypt: link ../src/decrypt_command.c file.o crypto.o $libkeccak
-build test: link ../test/test.c password.o file.o crypto.o $libkeccak
+build objects/password_command.o: cc ../src/password_command.c
+build objects/encrypt_command.o: cc ../src/encrypt_command.c
+build objects/decrypt_command.o: cc ../src/decrypt_command.c
+build objects/test.o: cc ../test/test.c
+
+build bin/password: link objects/password_command.o objects/password.o
+build bin/encrypt: link objects/encrypt_command.o objects/file.o objects/crypto.o $libkeccak
+build bin/decrypt: link objects/decrypt_command.o objects/file.o objects/crypto.o $libkeccak
+build bin/test: link objects/test.o objects/password.o objects/file.o objects/crypto.o $libkeccak

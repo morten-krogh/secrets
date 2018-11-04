@@ -1,7 +1,8 @@
 # build.ninja
 
 cc = gcc
-cflags = -Wall -Werror -Wpedantic
+cflags = -Wall -Werror -Wpedantic -I../XKCP/bin/generic64/libkeccak.a.headers
+libkeccak = ../XKCP/bin/generic64/libkeccak.a
 
 rule cc
     command = $cc $cflags -c $in -o $out -MMD -MF $out.d
@@ -15,8 +16,8 @@ rule link
 
 build file.o: cc ../src/file.c
 build password.o: cc ../src/password.c
-build keyak.o: cc ../src/keyak.c
+build crypto.o: cc ../src/crypto.c
 
 build password: link ../src/password_command.c password.o
-build encrypt: link ../src/encrypt_command.c file.o keyak.o
-build decrypt: link ../src/decrypt_command.c file.o keyak.o
+build encrypt: link ../src/encrypt_command.c file.o crypto.o $libkeccak
+build decrypt: link ../src/decrypt_command.c file.o crypto.o $libkeccak

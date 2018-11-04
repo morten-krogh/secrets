@@ -5,7 +5,7 @@
 #include <string.h>
 
 #include "file.h"
-#include "keyak.h"
+#include "crypto.h"
 
 void usage(const char* cmd)
 {
@@ -69,14 +69,14 @@ int main(int argc, char** argv)
 	char* output = malloc(input_size);
 	size_t output_size;
 
-	int rc = mk_keyak_decrypt(key, strlen(key), input, input_size, output, &output_size);
+	int rc = mk_decrypt(key, strlen(key), input, input_size, output, &output_size);
 	free(input);
 	if (!rc) {
 		free(output);
-		printf("The input in '%s' is unauthentciated\n", inpath);
+		printf("The input in '%s' is unauthenticated\n", inpath);
 		return 1;
 	}
-	assert(output_size == input_size - mk_keyak_tag_size);
+	assert(output_size == input_size - mk_crypt_prefix_size);
 
 	rc = mk_write_file(outpath, output, output_size);
 	free(output);

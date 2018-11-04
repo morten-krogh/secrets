@@ -66,15 +66,14 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	char* output = malloc(input_size + 100);
+	char* output = malloc(input_size + mk_keyak_tag_size);
 	size_t output_size;
 
-	int rc = mk_encrypt(key, strlen(key), input, input_size, output, &output_size);
-	assert(rc);
-	assert(output_size < input_size + 100);
+	mk_keyak_encrypt(key, strlen(key), input, input_size, output, &output_size);
+	assert(output_size == input_size + mk_keyak_tag_size);
 	free(input);
 
-	rc = mk_write_file(outpath, output, output_size);
+	int rc = mk_write_file(outpath, output, output_size);
 	free(output);
 	if (!rc) {
 		printf("The file '%s' already exists or could not be opened for writing\n", outpath);

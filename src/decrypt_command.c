@@ -69,14 +69,14 @@ int main(int argc, char** argv)
 	char* output = malloc(input_size);
 	size_t output_size;
 
-	int rc = mk_decrypt(key, strlen(key), input, input_size, output, &output_size);
+	int rc = mk_keyak_decrypt(key, strlen(key), input, input_size, output, &output_size);
 	free(input);
 	if (!rc) {
 		free(output);
 		printf("The input in '%s' is unauthentciated\n", inpath);
 		return 1;
 	}
-	assert(output_size < input_size);
+	assert(output_size == input_size - mk_keyak_tag_size);
 
 	rc = mk_write_file(outpath, output, output_size);
 	free(output);

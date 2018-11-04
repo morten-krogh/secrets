@@ -12,7 +12,7 @@ void usage(const char* cmd)
 	const char* fmt =
 		"Usage: %s [-h] -k string -i input -o output\n"
 		"  -h, --help    display this message\n"
-		"  -k, --key     symmetric key for the authentiated encryption\n"
+		"  -k, --key     secret key for the authentiated encryption\n"
 		"  -i --input    file path of data to decrypt\n"
 		"  -o --output   file path of decrypted data\n";
 	printf(fmt, cmd);

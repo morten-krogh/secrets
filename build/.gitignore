@@ -37,6 +37,7 @@
 password
 encrypt
 decrypt
+test
 *.exe
 *.out
 *.app

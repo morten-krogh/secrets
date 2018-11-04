@@ -13,8 +13,10 @@ rule link
     command = $cc $in -o $out
     description = link $out
 
+build file.o: cc ../src/file.c
 build password.o: cc ../src/password.c
 build keyak.o: cc ../src/keyak.c
 
 build password: link ../src/password_command.c password.o
-build encrypt: link ../src/encrypt_command.c keyak.o
+build encrypt: link ../src/encrypt_command.c file.o keyak.o
+build decrypt: link ../src/decrypt_command.c file.o keyak.o

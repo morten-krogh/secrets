@@ -13,8 +13,8 @@ void usage(const char* cmd)
 		"Usage: %s [-h] -k string -i input -o output\n"
 		"  -h, --help    display this message\n"
 		"  -k, --key     symmetric key for the authentiated encryption\n"
-		"  -i --input    file path of data to encrypt\n"
-		"  -o --output   file path of encrypted data\n";
+		"  -i --input    file path of data to decrypt\n"
+		"  -o --output   file path of decrypted data\n";
 	printf(fmt, cmd);
 }
 
@@ -66,13 +66,17 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	char* output = malloc(input_size + 100);
+	char* output = malloc(input_size);
 	size_t output_size;
 
-	int rc = mk_encrypt(key, strlen(key), input, input_size, output, &output_size);
-	assert(rc);
-	assert(output_size < input_size + 100);
+	int rc = mk_decrypt(key, strlen(key), input, input_size, output, &output_size);
 	free(input);
+	if (!rc) {
+		free(output);
+		printf("The input in '%s' is unauthentciated\n", inpath);
+		return 1;
+	}
+	assert(output_size < input_size);
 
 	rc = mk_write_file(outpath, output, output_size);
 	free(output);
